@@ -1,0 +1,176 @@
+<div class="container-fluid bg-white">
+    <ng-container *ngIf="isPageReady">
+        <form [formGroup]="jobsForm">
+          <div class="x_panel_body py-3">
+            <div class="x_header">
+              <div class="x_header_title">
+                <h2>Job Setting<small>Configure the job details</small></h2>
+              </div>
+            </div>
+            <div class="col-md-12 row">
+              <div class="col-md-3">
+                <label class="form-label">Job Occurrence Type</label>
+                <select formControlName="JobOccurrenceType" class="form-select">
+                  <option value="1">Daily</option>
+                  <option value="2">Weekly</option>
+                  <option value="3">Monthly</option>
+                  <option value="4">Yearly</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Job Type Name <span class="text-danger">*</span></label>
+                <select formControlName="KafkaServiceNameId" class="form-select" [ngClass]="{'error-field': isSubmitted && f['KafkaServiceNameId'].errors !== null && f['KafkaServiceNameId'].errors['required']}">
+                  <option [value]="null">Select Job Type</option>
+                  <option value={{item.ServiceTypeId}} *ngFor="let item of serviceTypes">
+                    {{item.ServiceName}}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Job Type Description <span class="text-danger">*</span></label>
+                <input type="text" formControlName="JobTypeDescription" class="form-control"
+                  placeholder="Job Type Description" maxlength="250" appUppercase
+                  [ngClass]="{'error-field': isSubmitted && f['JobTypeDescription'].errors !== null && f['JobTypeDescription'].errors['required']}">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Is Active Job</label>
+                <div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" formControlName="IsActiveJob" type="radio" name="IsActiveJob"
+                      id="IsActiveJob" [value]=true>
+                    <label class="form-check-label" for="IsActiveJob">Yes</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" formControlName="IsActiveJob" type="radio" name="IsActiveJob"
+                      id="IsActiveJob1" [value]=false>
+                    <label class="form-check-label" for="IsActiveJob1">No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row pb-3">
+              <div class="col-md-3 mt-3">
+                <label class="form-label">Job Time (in hrs)</label>
+                <select class="form-select" formControlName="JobTime">
+                  <option value="{{i}}" *ngFor="let item of [].constructor(24); let i = index">{{i}}</option>
+                </select>
+              </div>
+              <div class="col-md-3 mt-3"
+                *ngIf="(f['JobOccurrenceType'].value != 1 && f['JobOccurrenceType'].value != 3 && f['JobOccurrenceType'].value != 4)">
+                <label class="form-label">Job Day of Week</label>
+                <select class="form-select" formControlName="JobDayOfWeek">
+                  <option value="{{i}}" *ngFor="let item of [].constructor(7); let i = index">
+                    <div [ngSwitch]="i">
+                      <div *ngSwitchCase="0">Monday</div>
+                      <div *ngSwitchCase="1">Tuesday</div>
+                      <div *ngSwitchCase="2">Wednesday</div>
+                      <div *ngSwitchCase="3">Thursday</div>
+                      <div *ngSwitchCase="4">Friday</div>
+                      <div *ngSwitchCase="5">Saturday</div>
+                      <div *ngSwitchCase="6">Sunday</div>
+                    </div>
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3 mt-3" *ngIf="(f['JobOccurrenceType'].value != 1 && f['JobOccurrenceType'].value != 2)">
+                <label class="form-label">Job Day of Month</label>
+                <select class="form-select" formControlName="JobDayOfMonth">
+                  <option value="0" disabled>Select Day of month</option>
+                  <option value="{{i+1}}" *ngFor="let item of [].constructor(31); let i = index">{{i+1}}{{(i+1 == 1 || i+1 == 21
+                    || i+1 == 31) ? 'st' : (i+1 == 2 || i+1 == 22) ? 'nd' : (i+1 == 3 || i+1 == 23) ? 'rd' : 'th'}}</option>
+                </select>
+              </div>
+              <div class="col-md-3 mt-3">
+                <label class="form-label">Job Month of Year</label>
+                <select class="form-select" formControlName="JobMonthOfYear">
+                  <option value="{{i}}" *ngFor="let item of [].constructor(13); let i = index">
+                    <div [ngSwitch]="i">
+                      <div *ngSwitchCase="0">All month</div>
+                      <div *ngSwitchCase="1">January</div>
+                      <div *ngSwitchCase="2">Februray</div>
+                      <div *ngSwitchCase="3">March</div>
+                      <div *ngSwitchCase="4">April</div>
+                      <div *ngSwitchCase="5">May</div>
+                      <div *ngSwitchCase="6">June</div>
+                      <div *ngSwitchCase="7">July</div>
+                      <div *ngSwitchCase="8">August</div>
+                      <div *ngSwitchCase="9">September</div>
+                      <div *ngSwitchCase="10">October</div>
+                      <div *ngSwitchCase="11">November</div>
+                      <div *ngSwitchDefault>December</div>
+                    </div>
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="x_panel_body mt-3">
+            <div class="x_header">
+              <div class="x_header_title">
+                <h2>Job Scheduler<small>Fill job scheduler detaion (optional)</small></h2>
+              </div>
+            </div>
+            <div class="col-md-12 row pb-3">
+              <div class="col-md-3">
+                <label class="form-label">Job Start Date</label>
+                <form class="form-inline">
+                  <div class="form-group w-100">
+                    <div class="input-group inline-calendar w-100">
+                      <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="jobstartdateModel"
+                        (dateSelect)="onDateSelection($event)" ngbDatepicker [maxDate]="{year: 2050, month:12, day: 31}"
+                        [minDate]="minDate" #d="ngbDatepicker">
+                      <div class="input-group-append">
+                        <button class="btn calendar" (click)="d.toggle()" type="button"><i
+                            class="fa-regular fa-calendar-days fa-lg" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Job End Date</label>
+                <form class="form-inline">
+                  <div class="form-group w-100">
+                    <div class="input-group inline-calendar w-100">
+                      <input class="form-control" placeholder="yyyy-mm-dd" name="edp" [(ngModel)]="jobenddateModel"
+                        (dateSelect)="onEndDateSelection($event)" ngbDatepicker
+                        [maxDate]="{year: 2050, month:12, day: 31}" [minDate]="minDate" #ed="ngbDatepicker">
+                      <div class="input-group-append">
+                        <button class="btn calendar" (click)="ed.toggle()" type="button"><i
+                            class="fa-regular fa-calendar-days fa-lg" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Topic Name <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="TopicName" [ngClass]="{'error-field': isSubmitted && f['TopicName'].errors !== null && f['TopicName'].errors['required']}">
+                  <option [value]="null">Select Topic</option>
+                  <option value="{{item}}" *ngFor="let item of topics">{{item}}</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Group Id</label>
+                <input type="text" class="form-control" formControlName="GroupId" placeholder="Topic Name"
+                  maxlength="50" oninput="this.value = this.value.toLowerCase()" readonly
+                  [ngClass]="{'error-field': isSubmitted && f['GroupId'].errors !== null && f['GroupId'].errors['required']}">
+              </div>
+              <div class="col-md-3 mt-3">
+                <label class="form-label">Template</label>
+                <input type="text" class="form-control" formControlName="Template" placeholder="Template"
+                  oninput="this.value = this.value.toLowerCase()">
+              </div>
+            </div>
+          </div>
+          <div class="py-3 text-end">
+            <button class="btn btn-primary-c" (click)="saveJobsConnection()">
+              <i class="" [ngClass]="{'fa-solid fa-spinner fa-spin': isLoading, 'fa-regular fa-square-plus': !isLoading}"></i>
+              <span class="ps-2"> Save </span>
+            </button>
+          </div>
+        </form>
+    </ng-container>
+</div>

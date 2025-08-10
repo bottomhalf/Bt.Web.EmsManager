@@ -1,0 +1,80 @@
+<div class="container main-container py-5">
+  <ng-container *ngIf="isPageReady">
+    <div class="d-flex align-items-center justify-content-center">
+      <div class="card shadow p-3">
+          <form [formGroup]="initialForm" *ngIf="isPageReady">
+              <div class="row ps-5">
+                <div class="col-md-6">
+                  <div class="col-md-12 mt-3">
+                    <label class="form-label">Organization Name</label>
+                    <input type="text" class="form-control" placeholder="Enter Organization Name" formControlName="OrganizationName" oninput="this.value = this.value.toUpperCase()" [ngClass]="{'error-field': submitted && f['OrganizationName'].errors !== null && f['OrganizationName'].errors['required']}">
+                  </div>
+                  <div class="col-md-12 mt-3">
+                    <label class="form-label">Owner Name</label>
+                    <input type="text" class="form-control" placeholder="Enter Owner Name" formControlName="OwnerName" oninput="this.value = this.value.toUpperCase()" [ngClass]="{'error-field': submitted && f['OwnerName'].errors !== null && f['OwnerName'].errors['required']}">
+                  </div>
+                  <div class="col-md-12 mt-3">
+                    <label class="form-label">Company Name</label>
+                    <input type="text" class="form-control" placeholder="Enter Company Name" formControlName="CompanyName" oninput="this.value = this.value.toUpperCase()" [ngClass]="{'error-field': submitted && f['CompanyName'].errors !== null && f['CompanyName'].errors['required']}">
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 mt-3">
+                      <label class="form-label">Email Id *</label>
+                      <input class="form-control" formControlName="EmailId" placeholder="Email Id" [ngClass]="{'error-field': submitted && f['EmailId'].errors !== null && (f['EmailId'].errors['required'] || f['EmailId'].errors['email'])}"/>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                      <label class="form-label">Mobile No.</label>
+                      <input type="text" class="form-control" placeholder="Enter Mobile Name" formControlName="Mobile" OnlyNumber="10" onkeypress="return event.charCode >= 48 && event.charCode <= 57" [ngClass]="{'error-field': submitted && f['Mobile'].errors !== null && f['Mobile'].errors['required']}">
+                    </div>
+                  </div>
+                  <div class="col-md-12 mt-3">
+                    <label class="form-label">Full Address</label>
+                    <textarea class="form-control" placeholder="Full Address" formControlName="FullAddress" cols="30" rows="2"
+                    [ngClass]="{'error-field': submitted && f['FullAddress'].errors !== null && f['FullAddress'].errors['required']}"></textarea>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 mt-3">
+                      <label class="form-label">Country</label>
+                      <input type="text" class="form-control" placeholder="Enter Country" formControlName="Country" oninput="this.value = this.value.toUpperCase()">
+                    </div>
+                    <div class="col-md-6 mt-3">
+                      <label class="form-label">State</label>
+                      <input type="text" class="form-control" placeholder="Enter State" formControlName="State" oninput="this.value = this.value.toUpperCase()">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 mt-3">
+                      <label class="form-label">City</label>
+                      <input type="text" class="form-control" placeholder="Enter City" formControlName="City" oninput="this.value = this.value.toUpperCase()">
+                    </div>
+                    <div class="col-md-6 mt-3">
+                      <label class="form-label">GSTIN No.#</label>
+                      <input placeholder="GSTIN No.#" class="form-control" name="GSTNo" [ngClass]="{'error-field': submitted && f['GSTNo'].errors !== null && f['GSTNo'].errors['required']}"
+                        oninput="this.value = this.value.toUpperCase()" formControlName="GSTNo" />
+                    </div>
+                  </div>
+                  <div class="text-end mt-3">
+                    <button class="btn btn-success" [disabled]="isLoading" (click)="registerAccount()">
+                        <i class="fa-solid fa-spinner fa-spin" *ngIf="isLoading"></i>
+                        <i class="fa-solid fa-floppy-disk" *ngIf="!isLoading"></i>
+                        <span class="ps-2">{{ isLoading ? 'Wait' : 'Register' }}</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="col-md-6 overflow-hidden text-center">
+                  <img src="assets/signup.avif" alt="" class="img-fluid">
+                  <h2>Emstum streamlines day-to-day tasks for deskless teams, promoting connectivity and empowering you to concentrate on expanding your business.</h2>
+                </div>
+              </div>
+          </form>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!isPageReady">
+    <div class="d-flex justify-content-center align-items-center h-100">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,127 @@
+<div class="container-fluid" [ngClass]="{ 'vh-100': !isPageReady }">
+  <ul class="list-unstyled d-flex align-items-center border-bottom mt-3">
+    <li class=" py-2 px-2 pe-click" [ngClass]="{'active-tab': active == 1, 'pe-none': !isPageReady}" data-name="1" (click)="activeTab($event)">
+      <a href="javascript:void(0)" class="text-decoration-none">
+        Pending Request
+      </a>
+    </li>
+    <li class="ms-3 px-2 py-2 pe-click" [ngClass]="{'active-tab': active == 2, 'pe-none': !isPageReady}" data-name="2" (click)="activeTab($event)">
+      <a href="javascript:void(0)" class="text-decoration-none">
+        Request Completed
+      </a>
+    </li>
+  </ul>
+  <div class="row mt-4 mx-3 justify-content-between">
+    <div class="col-md-9">
+      <div class="t-table t-list col-md-12">
+        <div class="t-head">
+          <div class="tr">
+            <div class="th fe-index">
+              <div class="cell-wrapper ps-3 fw-bold">#</div>
+            </div>
+            <div class="th fe-2">
+              <div class="cell-wrapper fw-bold">
+                <i class="fa-solid fa-school pe-1"></i>
+                Organization Name
+              </div>
+            </div>
+            <div class="th fe-2">
+              <div class="cell-wrapper fw-bold">
+                <i class="fa-solid fa-building pe-1"></i>
+                Company Name
+              </div>
+            </div>
+            <div class="th fe-2">
+              <div class="cell-wrapper fw-bold">
+                <i class="fa-regular fa-envelope"></i>
+                Email
+              </div>
+            </div>
+            <div class="th">
+              <div class="cell-wrapper fw-bold">
+                <i class="fa-solid fa-phone pe-1"></i>
+                Mb. No.
+              </div>
+            </div>
+            <div class="th">
+              <div class="cell-wrapper fw-bold pe-1">
+                <i class="fa-solid fa-user pe-1"></i>
+                Full Name
+              </div>
+            </div>
+            <div class="th fe-index" *ngIf="active == 1">
+              <div class="cell-wrapper fw-bold">Action</div>
+            </div>
+          </div>
+        </div>
+        <ng-container *ngIf="!isPageReady">
+          <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </ng-container>
+        <div class="t-body" *ngIf="isPageReady && trialList != null && trialList.length > 0">
+          <div class="tr py-2" *ngFor="let item of trialList; let i = index">
+            <div class="td align-middle fe-index">
+              <div class="cell-wrapper ps-3">
+                {{ item.Index }}
+              </div>
+            </div>
+            <div class="td align-middle fe-2 text-truncate">
+              <div class="cell-wrapper text-truncate">
+                {{ item.OrganizationName }}
+              </div>
+            </div>
+            <div class="td align-middle fe-2 text-truncate">
+              <div class="cell-wrapper text-truncate">
+                {{ item.CompanyName }}
+              </div>
+            </div>
+            <div class="td align-middle fe-2 text-truncate">
+              <div class="cell-wrapper text-truncate">
+                {{ item.Email }}
+              </div>
+            </div>
+            <div class="td align-middle">
+              <div class="cell-wrapper">
+                {{ item.PhoneNumber }}
+              </div>
+            </div>
+            <div class="td align-middle">
+              <div class="cell-wrapper">
+                {{ item.FullName }}
+              </div>
+            </div>
+            <div class="td align-middle fe-index" *ngIf="active == 1">
+              <div class="cell-wrapper">
+                <a
+                  href="javascript:void(0)"
+                  class="text-decoration-none"
+                  (click)="viewTrial(item)"
+                >
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-3">
+      <ng-container *ngIf="isPageReady">
+          <app-pagination [pagination]="trialData" (onPageChange)="GetFilterResult($event)"></app-pagination>
+        </ng-container>
+      </div>
+      
+    </div>
+    <div class="col-md-3">
+      <img src="assets/company.jpg" alt="img" class="img-thumbnail" />
+      <h5 class="mt-4 text-white">
+        This webpage provides an overview of companies requesting product
+        demonstrations. It likely includes details like company name, contact
+        information etc. A convenient button allows you to directly create a
+        database entry for each requesting company, streamlining the process.
+      </h5>
+    </div>
+  </div>
+</div>

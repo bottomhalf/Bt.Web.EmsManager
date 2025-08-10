@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <div class="alert alert-info mt-3" role="alert">
+        <span class="fw-bold">Company Code: </span>  {{companyCode}}
+        <span class="px-3">-</span>
+        <span class="fw-bold">Db Name: </span>  {{dbName}}
+    </div>
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Daily Attendance</td>
+                <td>
+                    <button class="btn btn-success btn-sm" (click)="generateAttendance()">
+                        <ng-container *ngIf="isLoading">
+                            <i class="fa-solid fa-spinner fa-spin"></i>
+                        </ng-container>
+                        <ng-container *ngIf="!isLoading">Run</ng-container>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Yearly Leave Generation</td>
+                <td>
+                    <button class="btn btn-success btn-sm" (click)="yearlyLeaveGenerated()">
+                        <ng-container *ngIf="isLoading">
+                            <i class="fa-solid fa-spinner fa-spin"></i>
+                        </ng-container>
+                        <ng-container *ngIf="!isLoading">Run</ng-container>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,19 @@
+<ul>
+    @for (node of nodes; track $index) {
+        <li>
+            @if (node.children?.length>0) {
+                <ng-container>
+                    <button class="folder-button" (click)="onFolderButtonClick(node)">
+                        <label class="folder-button-label" *ngIf="!node.expand">+</label>
+                        <label class="folder-button-label" *ngIf="node.expand">-</label>
+                    </button>
+                </ng-container>                
+            }
+
+            <label [ngClass]="{'item-name': !node.children?.length }">{{node.name}}</label>
+            @if (node.children && node.expand) {
+                <app-tree [nodes]="node.children"></app-tree>
+            }            
+        </li>
+    }
+</ul>

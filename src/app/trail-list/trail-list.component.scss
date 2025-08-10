@@ -1,0 +1,213 @@
+.t-table {
+  position: relative;
+}
+
+.t-head>.tr:first-child {
+  padding: 1rem 0rem 0.5rem 0;
+}
+
+.t-table .t-head>.tr {
+  display: flex;
+  flex-direction: row;
+}
+
+.t-table .t-body>.tr {
+  display: flex;
+  flex-direction: row;
+  background: #fff;
+  box-shadow: 0px 2px 6px 0px #d9d9d9;
+  margin: 10px 6px;
+}
+
+.t-table .td,
+.th {
+  flex: 1;
+}
+
+
+.t-border .td,
+.th {
+  border-left: 1px solid #d9d9d9;
+}
+
+.t-border .td:first-child,
+.th:first-child {
+  border-left: none;
+  border-right: none;
+}
+
+.t-border .td:last-child,
+.th:last-child {
+  border-right: none;
+}
+
+.t-border .tr {
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.t-border {
+  border: 1px solid #d9d9d9;
+}
+
+.t-border>.t-body>.tr:last-child {
+  border-bottom: none;
+}
+
+.hide-bar {
+  position: absolute;
+  width: 13px;
+  height: 2.95rem !important;
+  background: white;
+  right: 0px;
+  border-bottom: 1px solid white;
+}
+
+.t-body {
+  max-height: auto !important;
+}
+
+.t-foot {
+  border-top: 1px solid #d9d9d9;
+  padding: 1rem;
+}
+
+.t-foot {
+  border-top: 1px solid #d9d9d9;
+  padding: 1rem;
+}
+
+.t-head .th {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.t-head .t-filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  margin-top: 1rem;
+}
+
+.t-head .t-index {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.t-filter a {
+  text-decoration: none;
+  color: cadetblue;
+  font-weight: bold;
+}
+
+.t-index a {
+  text-decoration: none;
+  color: cadetblue;
+  font-weight: bold;
+}
+
+.t-filter i {
+  padding-top: 4px;
+}
+
+.t-index i {
+  padding-top: 4px;
+}
+
+.border-cell {
+  border-left: none !important;
+
+  .tr {
+    padding: 0px !important;
+    border-left: none !important;
+  }
+
+  .td,
+  .th {
+    border-top: 1px solid #d9d9d9 !important;
+    border-left: 1px solid #d9d9d9 !important;
+  }
+}
+
+
+
+.fe-1 {
+  flex: 1 !important;
+}
+
+.fe-2 {
+  flex: 2 !important;
+}
+
+.fe-3 {
+  flex: 3 !important;
+}
+
+.fe-4 {
+  flex: 4 !important;
+}
+
+.fe-5 {
+  flex: 5 !important;
+}
+
+.fe-6 {
+  flex: 6 !important;
+}
+
+.fe-7 {
+  flex: 7 !important;
+}
+
+.fe-8 {
+  flex: 8 !important;
+}
+
+.fe-9 {
+  flex: 9 !important;
+}
+
+.fe-10 {
+  flex: 10 !important;
+}
+
+.fe-0 {
+  flex: 0 1 auto !important;
+}
+
+.fe-index {
+  flex: 0.4 !important;
+}
+
+.t-list .td,
+.th {
+  border: none;
+}
+
+.t-body>.tr:hover {
+  background-color: #efefef !important;
+  font-weight: 700 !important;
+}
+
+.container {
+  background: white;
+  color: #444;
+}
+
+.active-tab {
+  border-bottom: 0px !important;
+  border-radius: 10px 10px 0px 0px;
+  background-color: #337ab7;
+  transition: all 0.3s linear;
+  pointer-events: none !important;
+  a {
+    color: #fff;
+    pointer-events: none !important;
+  }
+}
+
+.pe-click {
+  cursor: pointer;
+}

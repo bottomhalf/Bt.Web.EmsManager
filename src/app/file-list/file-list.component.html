@@ -1,0 +1,167 @@
+<div class="">
+    <div class="row">
+        <div class="col-md-3">
+            <app-tree [nodes]="nodes"></app-tree>
+        </div>
+        <div class="col-md-6">
+            <app-breadcrums [title]="'Generate bill'" [routes]="routePath" (loadRoute)="loadRoute($event)"></app-breadcrums>
+        
+            @if (isPageReady) {
+            <div class="text-end mb-3 mt-2">
+                <button class="btn btn-primary-c" (click)="addFolderPopup()"><i class="fa-solid fa-plus"></i> Add Folder</button>
+                <button class="btn btn-primary-c mx-2" (click)="addTokenFilePoppup()"><i class="fa-solid fa-plus"></i> Add Token File</button>
+                <button class="btn btn-primary-c" (click)="addNewFile()"><i class="fa-solid fa-plus"></i> Add Normal File</button>
+            </div>
+            @if (fileDetails != null && fileDetails.length > 0) {
+            <ul class="list-group">
+                @for (item of fileDetails; track $index) {
+                <li class="list-group-item">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-md-6 d-flex align-items-center">
+                            @switch (item.Extension) {
+                                @case ('txt') {
+                                    <i class="fa-regular fa-file-lines me-2"></i>
+                                }
+                                @case ('dir') {
+                                    <i class="fa-solid fa-folder me-2" style="color: #74C0FC;"></i>
+                                }
+                                @default {
+                                    <i class="fa-solid fa-file me-2"></i>
+                                }
+                            }                    
+                            <a href="javascript:void(0)" class="col-md-11 text-decoration-none text-dark file-name"
+                                (click)="loadNext(item)">
+                                <p class="mb-0 col-md-12 text-truncate">
+                                    {{item.FileName}}
+                                </p>
+                            </a>
+                        </div>
+                        <div class="col-auto">
+                            Admin
+                        </div>
+                        <div class="col-auto">
+                            {{item.CreatedOn | date}}
+                        </div>
+                        <div class="col-auto">
+                            @if (item.Extension == 'dir') {
+                                <a href="javascript:void(0)" (click)="editFolderPopup(item)">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </a>
+                            } @else {
+                                <a href="javascript:void(0)" class="me-3 text-danger" (click)="deleteFilePopup(item)">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                                <a href="javascript:void(0)" (click)="viewFile(item)">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </li>
+                }
+            </ul>
+            }
+            } @else {
+            <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            }
+        </div>        
+    </div>
+</div>
+
+
+<!-- Delete file alert modal -->
+<div class="modal fade" id="deleteFileModal" tabindex="-1" aria-labelledby="deleteFileModalLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                @if (selectDeleteFile != null) {
+                Do you really want to delete
+                <span class="fw-bold">{{selectDeleteFile.FileName}}</span> file.
+                }
+            </div>
+            <div class="modal-footer border-top-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    [disabled]="isLoading">Close</button>
+                <button type="button" class="btn btn-danger" [disabled]="isLoading" (click)="deleteFile()">
+                    <i class="fa-solid" [ngClass]="{'fa-spinner fa-spin': isLoading, 'fa-trash': !isLoading}"></i>
+                    {{ isLoading ? 'Wait' : 'Delete' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete file alert modal -->
+<div class="modal fade" id="manageTokenFileModal" tabindex="-1" aria-labelledby="manageTokenFileModalLabel"
+    aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content px-3">
+            <div class="modal-header border-bottom-0">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Token File Detail</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <label class="form-label">Key <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="Secret key" [(ngModel)]="tokenFileDetail.Key" [ngClass]="{'error-field': submitted && (tokenFileDetail.Key == null || tokenFileDetail.Key == '')}">
+                    <p class="mb-0 text-end">
+                        <a href="javascript:void(0)" (click)="generateSecretKey()" class="">Generate Key</a>
+                    </p>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <label class="form-label">Issuer <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="Issuer" [(ngModel)]="tokenFileDetail.Issuer" [ngClass]="{'error-field': submitted && (tokenFileDetail.Issuer == null || tokenFileDetail.Issuer == '')}">
+                </div>
+                <div class="col-md-12 mt-3">
+                    <label class="form-label">Company Code <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="Company Code" [(ngModel)]="tokenFileDetail.CompanyCode" [ngClass]="{'error-field': submitted && (tokenFileDetail.CompanyCode == null || tokenFileDetail.CompanyCode == '')}">
+                </div>
+                <div class="col-md-12 mt-3">
+                    <label class="form-label">Expiry Time (seconds) <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" placeholder="Issuer" [(ngModel)]="tokenFileDetail.ExpiryTimeInSeconds" [ngClass]="{'error-field': submitted && (tokenFileDetail.ExpiryTimeInSeconds == null || tokenFileDetail.ExpiryTimeInSeconds < 6000)}">
+                </div>
+            </div>
+            <div class="modal-footer border-top-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    [disabled]="isLoading">Close</button>
+                <button type="button" class="btn btn-primary-c" [disabled]="isLoading" (click)="saveTokenDetail()">
+                    <i class="fa-solid" [ngClass]="{'fa-spinner fa-spin': isLoading, 'fa-floppy-disk': !isLoading}"></i>
+                    {{ isLoading ? 'Wait' : 'Save' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Manage Folder -->
+<div class="modal fade" id="manageFolderModal" tabindex="-1" aria-labelledby="manageFolderModalLabel"
+    aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content px-3">
+            <div class="modal-header border-bottom-0">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Manage folder name</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <label class="form-label">Folder Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="Folder Name" [(ngModel)]="folderDetail.FileName" [ngClass]="{'error-field': submitted && (folderDetail.FileName == null || folderDetail.FileName == '')}">
+                </div>
+            </div>
+            <div class="modal-footer border-top-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    [disabled]="isLoading">Close</button>
+                <button type="button" class="btn btn-primary-c" [disabled]="isLoading" (click)="manageFolderDetail()">
+                    <i class="fa-solid" [ngClass]="{'fa-spinner fa-spin': isLoading, 'fa-floppy-disk': !isLoading}"></i>
+                    {{ isLoading ? 'Wait' : 'Save' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

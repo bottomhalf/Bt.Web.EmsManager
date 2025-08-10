@@ -1,0 +1,42 @@
+<div class="nav-bg-img">
+  <nav class="navbar navbar-expand-lg pb-3 nav-bg position-sticky" style="top: 0; z-index: 999999 !important; height: 3.2rem;" [ngClass]="{ 'scrolled shadow-sm': isScrolled }">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)" routerLink="login">
+        <img src="https://www.emstum.com/assets/images/logo.png" alt="logo" style="width: 10vw;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item" >
+            <a class="nav-link" aria-current="page" href="javascript:void(0)" [routerLink]="'companytrialist'" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Organization</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" [routerLink]="'reloaddb'" routerLinkActive="active">Reload</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" [routerLink]="'servicehealth'" routerLinkActive="active">Service Health</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" [routerLink]="'jobs'" routerLinkActive="active">Cron Jobs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" [routerLink]="'repository'" routerLinkActive="active">Repositories</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" [routerLink]="['filelist']" routerLinkActive="active">File & Folders</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item ms-auto" placement="start" ngbTooltip="Logout">
+            <a class="nav-link fw-bold text-dark" href="javascript:void(0)" (click)="logout()">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
+</div>

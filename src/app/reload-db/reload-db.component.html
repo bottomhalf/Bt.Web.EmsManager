@@ -1,0 +1,60 @@
+
+<div class="container">
+    <div class="my-3 row align-items-center justify-content-end">
+        <div class="col-md-4">
+            <div class="d-flex form-control align-items-center form-control-sm">
+                <i class="fa-solid fa-magnifying-glass pe-2"></i>
+                <input type="text" class="form-control form-control-sm border-0" [(ngModel)]="filterText" placeholder="Type here...."
+                (keyup.enter)="filterRecord()" (keydown.esc)="resetRecord()">
+            </div>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" (click)="filterRecord()"><i class="fa-solid fa-filter"></i></button>
+            <button class="btn btn-danger mx-2" (click)="resetRecord()"><i class="fa-solid fa-repeat"></i></button>
+            <button class="btn btn-success" [disabled]="isLoading" (click)="reloadDataBasePopup()"> <i class="fa-solid fa-rotate-right pe-2"></i>Reload Connection</button>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Organization Code</th>
+                <th scope="col">Code</th>
+                <th scope="col">Database </th>
+                <th scope="col" class="text-center">Cron Job</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of masterConnectionString; let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{item.OrganizationCode}}</td>
+                <td>{{item.Code}}</td>
+                <td>{{item.Database}}</td>
+                <td class="text-center">
+                    <a href="javascript:void(0)" class="text-decoration-none" (click)="viewCronjob(item.Code, item.Database)">
+                        <i class="fa-solid fa-pencil"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="reloadAlertModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="reloadAlertModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content px-3">
+        <div class="modal-header border-bottom-0">
+          <h1 class="modal-title fs-5 text-danger" id="reloadAlertModalLabel">Alert <i class="fa-solid fa-triangle-exclamation"></i></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        </div>
+        <div class="modal-body fw-semibold text-danger-emphasis">
+           Do you really want to reload the data connection? If you click 'Yes,' all connections will be reloaded, and they will be temporarily stopped for a few seconds.
+        </div>
+        <div class="modal-footer border-top-0">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" [disabled]="isLoading">No</button>
+          <button class="btn btn-success" [disabled]="isLoading" (click)="reloadDataBase()"> <i class="fa-solid fa-rotate-right pe-2"></i>Reload Connection</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,81 @@
+<div class="container-fluid mt-3">
+    <div class="card px-3">
+        <div class="row align-items-center justify-content-between my-3">
+            <div class="col-auto d-flex align-items-center">
+                <div class="col-auto overflow-hidden me-2">
+                    <img src="https://cdn-icons-png.flaticon.com/512/12110/12110672.png" class="rounded rounded-circle service-img" alt="">
+                </div>
+                <div class="col-md-10">
+                    <h5 class="mb-0 fw-bold">Emstum Service</h5>
+                    <p class="mb-0">BottomHalf Pvt. Ltd.</p>
+                </div>
+            </div>
+            <div class="col-auto text-muted">
+                8 minutes ago
+            </div>
+        </div>
+        <hr>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" width="40%">Service Name</th>
+                    <th scope="col">Url/ip</th>
+                    <th scope="col">Last Visited</th>
+                    <th scope="col">Module/Controller</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="allServiceHealth != null && allServiceHealth.length > 0">
+                    <tr *ngFor="let item of allServiceHealth; let i=index">
+                        <th class="fw-normal">
+                            {{item.serviceName}}
+                            <ng-container *ngIf="item.status == 1">
+                                <i class="fa-solid fa-circle fa-fade text-success ms-2"></i>
+                            </ng-container>
+                            <ng-container *ngIf="item.status == 2">
+                                <i class="fa-solid fa-circle text-danger ms-2"></i>
+                            </ng-container>
+                        </th>
+                        <th class="fw-normal">{{item.url}}</th>
+                        <th class="fw-normal">{{item.lastVisited | date}}</th>
+                        <th class="fw-normal">{{item.module}}</th>
+                        <th class="fw-normal">{{item.Save}}</th>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="allServiceHealth == null || allServiceHealth.length == 0">
+                    <tr>
+                        <td colspan="6">
+                            <div class="my-5 py-5 text-center fs-4 fw-semibold text-dark">
+                                No record found
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+        <div class="my-3 d-flex align-items center justify-content-end">
+            <a href="javascript:void(0)" class="text-decoration-none ms-3 text-dark">
+                <i class="fa-solid fa-ellipsis"></i>
+            </a>
+            <a href="javascript:void(0)" class="text-decoration-none ms-3 text-dark">
+                <i class="fa-regular fa-thumbs-up"></i>
+            </a>
+            <a href="javascript:void(0)" class="text-decoration-none ms-3 text-dark">
+                <i class="fa-regular fa-heart"></i>
+            </a>
+            <a href="javascript:void(0)" class="text-decoration-none ms-3 text-dark">
+                <i class="fa-solid fa-tag"></i>
+            </a>
+            <a href="javascript:void(0)" class="text-decoration-none ms-3 text-dark">
+                <i class="fa-solid fa-circle-check"></i>
+            </a>
+            <a href="javascript:void(0)" class="text-decoration-none ms-3 text-dark">
+                <i class="fa-solid fa-thumbtack"></i>
+            </a>
+            <a href="javascript:void(0)" class="text-decoration-none ms-3 text-dark">
+                <i class="fa-solid fa-share"></i>
+            </a>
+
+        </div>
+    </div>
+</div>
